@@ -450,9 +450,10 @@ $test = 0;
 			}*/
 
 
-			$left_hand = ($limit_num*40)+1;
-			$right_hand = ($limit_num*40)+40;
+			$left_hand = ($limit_num*40);
+			$right_hand = ($limit_num*40)+39;
 			$query = "SELECT book_image,id FROM withstudy_book WHERE $key LIKE '%$criterion%' LIMIT $left_hand, $right_hand";
+
 			
 			$result = mysql_query($query);
 
@@ -473,10 +474,12 @@ $test = 0;
 			}
 		}
 
-		public function getBookData(){
+		public function getBookData($limit_num){
 		
-
-			$query = "SELECT book_image,id FROM withstudy_book";
+			$left_hand = ($limit_num*40);
+			$right_hand = ($limit_num*40)+39;
+			
+			$query = "SELECT book_image,id FROM withstudy_book LIMIT $left_hand,$right_hand";
 			$result = mysql_query($query);
 			$cnt=0;
 			while ($row = mysql_fetch_array($result, MYSQL_BOTH)) {

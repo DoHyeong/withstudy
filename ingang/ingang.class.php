@@ -1,6 +1,8 @@
 <?php
 
+include_once "withstudy.class.php";
 
+$withstudyclass = new withstudy();
 	class ingang{
 
 

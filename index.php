@@ -109,6 +109,10 @@ setInterval(function(){
 						<input type = "submit" value = "로그인" class = "submit">
 				</div>
 
+				
+						<a href = "/withstudy/signup/select.php" > asdf </a>
+				
+
 
 			</form>
 			

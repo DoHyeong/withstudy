@@ -5,7 +5,7 @@ include_once "user.class.php";
 include_once "ingang.class.php";
 $withstudyclass = new withstudy();
 $ingang = new ingang();
-$bookid = $_REQUEST['ingangid'];
+$bookid = $_REQUEST['bookid'];
 ?>
 
 <html>
@@ -48,55 +48,33 @@ $bookid = $_REQUEST['ingangid'];
 
 
 
-	<form method = "post" action = "ingang_add_controller.php" enctype='multipart/form-data'>
-
-
 	
-		<input type="hidden" name="book_id" value='<?php echo $bookid;  ?>' />
-
-
-		<div id = "big-image">
-
-				<img src = " <?php echo $withstudyclass -> getBookImageById($bookid); ?> " style="width:100%; height: 25%; filter:alpha(opacity=100, style=2, finishopacity=0)" />
-
-			</div>
-			<div id = "book-title"><?php echo $withstudyclass -> getBookTitleById($bookid); ?></div>
-			<div id = "book-info" ><?php echo $withstudyclass -> getBookDateById($bookid); ?>,<?php echo $withstudyclass -> getBookPublisherById($bookid); ?>(<?php echo $withstudyclass -> getBookAuthorById($bookid); ?>)</div>
-			
-
-			
-			<div id="sliderWrap">
-		<ul>
-			<li><img src="images/s1.jpg" alt="" /></li>
-			<li><img src="images/s2.jpg" alt="" /></li>
-			<li><img src="images/s3.jpg" alt="" /></li>
-			<li><img src="images/s4.jpg" alt="" /></li>
-			<li><img src="images/s5.jpg" alt="" /></li>
-			<li><img src="images/s6.jpg" alt="" /></li>
-			<li><img src="images/s7.jpg" alt="" /></li>
-		</ul>
-	</div>
-
-
-			<select name = "big_title" >
+<form action="add_book.php" method="POST">
+   <select name = "big_title" >
 
 			<?php  $ingang->getBookBigIndex($bookid); ?>
 
 		</select>
 
 
-		<select name = "small_id" style = "margin-top: 5px;">
+		<input type ="text" name= "q" />
+</form>
 
-			<?php  $ingang->getBookSmallIndex($bookid);   ?>
+	
+	
+			
 
-		</select>
+			
+		
 
 		
 
-		<div id = "ingang-submit">
-			<input type = "submit" value ="등록하기"style="width:100%; background-color: blue; "> </div>
 
-	</form>
+		
+
+		
+
+
 
 
 

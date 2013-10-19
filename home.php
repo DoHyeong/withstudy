@@ -55,7 +55,6 @@ img {border: 0;}
     width: 30%;
     margin-right: 1%;
     border: 1px solid #000000; 
-    
 }
 
 #test{}

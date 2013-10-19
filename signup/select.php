@@ -1,83 +1,85 @@
 <?php
+include_once "withstudy.class.php";
+		$withstudyclass = new withstudy();
+		$withstudyclass->db_conn(); // db접속 
+
 require_once("facebook2.php");
+$facebook = new Facebook(array('appId'  => '478124398953071', 'secret' => '5cdc0499956368a113eedfd92a17e5b8'));  
+$user_fb = $facebook->getUser();
 
-$config = array();
-$config['appId'] = '478124398953071';
-$config['secret'] = '5cdc0499956368a113eedfd92a17e5b8';
 
-$facebook = new Facebook($config);
+if($user_fb == 0)
+{
+    $user_fb = $facebook->getUser();
+}
 
+if ($user_fb) // 체크를 눌러서 넘어 왔을 경우 .
+{   
+    $user_profile = $facebook->api('/me'); 
+
+    $logoutUrl = $facebook->getLogoutUrl(); 
+
+   // var_dump($user_profile['email']);
+
+
+     $sql = "SELECT * FROM withstudy_accounts WHERE facebook_id = $user_fb";
+    $result = mysql_query($sql);
+     $num = mysql_num_rows($result);
+	 
+
+    if($num == 0 ){ // 회원 정보에 없다면 
+echo 'none';
+    
+    echo $user_image = "https://graph.facebook.com/$user_fb/picture";
+    echo $gomsu = md5($user_image);
+    echo $name = $user_profile['first_name'].$user_profile['last_name'];
+    echo $email = $user_profile['email'];
+    echo $birth = $user_profile['birthday'];
+   // $year = split("/", $birth);
+  // $grade = (2013 - $year) - 6 ;
+   
+   echo $query2 = "INSERT INTO `withstudy`.`withstudy_accounts` (
+ `id` ,
+`facebook_id` ,
+`user_id` ,
+`password` ,
+`user_image` ,
+`user_grade` ,
+`user_name` ,
+`user_email` ,
+`user_email_allowed` ,
+`join_ip` 
+)
+VALUES (
+ NULL , '$user_fb', '$gomsu', '$gomsu', '$user_image','33','$name', '$email','1', '127.0.0.1'
+)
+";
+
+$result = mysql_query($query2);
+echo mysql_result($result);
+
+    }
+	
+	 else{
+
+        $query = "SELECT * FROM withstudy_accounts WHERE facebook_id = $user_fb";
+        $result = mysql_query($query);
+        $row = mysql_fetch_array($result);
+         $_SESSION["id"] = $row[id];
+
+                         echo "<script> top.location.href='/withstudy/home.php'</script>";   
+
+
+    }
+    
+
+ }
+
+else // user's FB user ID has not getting load login url with email permission
+{     
+     $perms = array('scope' => 'email,user_birthday');
+     $loginUrl = $facebook-> getLoginUrl($perms);        
+     echo "<script> top.location.href='" . $loginUrl . "'</script>";       
+     
+}
 ?>
-
-
-<!DOCTYPE html>
-<html>
-<head>
-
-
-	
-    	
-
-
-	<title></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-	<meta charset = "utf8">
-
-
-	<style type = "text/css">
-
-	
-
-	html,body { width:100%;height: 100%;margin:0;padding:0; overflow-x:hidden; overflow: hidden; }
-
-
-	#bar-top{width:100%; height: 43px; background-color: #ff8c00;}
-	#bar-top-text{font-size: 30px; color: white; line-height: 43px; font-weight: bold; text-align: center; cursor: pointer;}
-	#main{width: 100%; height: 100%;}
-	#content{width:100%; height: 100%; text-align: center; margin: 0 auto;}
-	
-	#facebook-box{width: 100%; min-height: 50%; background-color: #3B5998;}
-	#gen-box{width: 100%; min-height: 50%;  background-color: orange;}
-	
-	#facebook-box-image{margin-top: 10px; width: 160px; height: 160px; margin: 0 auto; border: 2px solid #000000;}
-	#facebook-box-text{margin-top: 15px; color: white; font-size: 25px;}
-
-
-	
-
-</style>
-</head>	
-<body>
-	
-
-	<div id = "main">
-		<div id = "content">
-			
-			
-			<div id = "gen-box">
-				<div id = "facebook-box-image">a</div>
-				<div id = "facebook-box-text">간편한 이메일 계정으로 가입하기 </div>
-			</div>
-
- <?php
- 		$login_url = $facebook->getLoginUrl();
-   	  echo '<a href="' . $login_url . '">';
-
-   	  ?>
-			<div id = "facebook-box">
-				<div id = "facebook-box-image">a</div>
-				<div id = "facebook-box-text"><?php $user_profile = $facebook->api('/me','GET');
-        echo "Name: " . $user_profile['name'];  ?></div>
-			</div>
-
-		</a>
-		
-			
-	</div>
-
-
-	
-
-
-</body>
-</html>

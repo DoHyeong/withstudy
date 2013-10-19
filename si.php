@@ -1,15 +1,17 @@
+
+
+
 <?php
 
 require_once("facebook2.php");
+
+
 
 $config = array();
 $config['appId'] = '478124398953071';
 $config['secret'] = '5cdc0499956368a113eedfd92a17e5b8';
 
 $facebook = new Facebook($config);
-
-
-
   
   $user_id = $facebook->getUser();
 ?>
@@ -17,7 +19,7 @@ $facebook = new Facebook($config);
   <head></head>
   <body>
 
-  <?php
+   <?php
     if($user_id) {
 
       // We have a user ID, so probably a logged in user.
@@ -25,16 +27,15 @@ $facebook = new Facebook($config);
       try {
 
         $user_profile = $facebook->api('/me','GET');
-        //echo "Name: " . $user_profile['name'];
+        echo "Name: " . $user_profile['birthday'];
 
-        
       } catch(FacebookApiException $e) {
         // If the user is logged out, you can have a 
         // user ID even though the access token is invalid.
         // In this case, we'll get an exception, so we'll
         // just ask the user to login again here.
         $login_url = $facebook->getLoginUrl(); 
-        echo 'Please <a href="' . $login_url . '">loginㅗㅗ.</a>';
+        echo 'Please <a href="' . $login_url . '">login.ㅗㅗㅗㅗㅗ</a>';
         error_log($e->getType());
         error_log($e->getMessage());
       }   
@@ -47,6 +48,7 @@ $facebook = new Facebook($config);
     }
 
   ?>
+
 
   </body>
 </html>
