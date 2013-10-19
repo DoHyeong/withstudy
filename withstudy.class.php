@@ -443,12 +443,16 @@ $test = 0;
 		}
 
 
-		public function getBookDataByKey($key,$criterion) {
+		public function getBookDataByKey($key,$criterion,$limit_num) {
 			/*if($key != "book_title" || $key != "book_autor" || $key != "book_publisher") {
 				echo "잘못된 접근입니다. 잘못된 접근이 여러번 발생할 시 제제를 당할 수 있습니다."
 				return;
 			}*/
-			$query = "SELECT image,snumber FROM book WHERE $key LIKE '%$criterion%'";
+
+
+			$left_hand = ($limit_num*40)+1;
+			$right_hand = ($limit_num*40)+40;
+			$query = "SELECT book_image,id FROM withstudy_book WHERE $key LIKE '%$criterion%' LIMIT $left_hand, $right_hand";
 			
 			$result = mysql_query($query);
 
@@ -472,7 +476,7 @@ $test = 0;
 		public function getBookData(){
 		
 
-			$query = "SELECT image,snumber FROM book";
+			$query = "SELECT book_image,id FROM withstudy_book";
 			$result = mysql_query($query);
 			$cnt=0;
 			while ($row = mysql_fetch_array($result, MYSQL_BOTH)) {

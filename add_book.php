@@ -129,7 +129,7 @@ $searchs = $_POST["value"];
 					<?php 
             if($searchs == null) $withstudyclass->getBookData(); // db접속 
             else {
-              $withstudyclass->getBookDataByKey("title",$searchs);
+              $withstudyclass->getBookDataByKey("title",$searchs,0);
             }
           ?>
 				</ul>
